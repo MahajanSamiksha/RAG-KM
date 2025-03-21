@@ -42,12 +42,16 @@ def get_rag_response(query: str):
     vector_store = load_faiss_index()
 
     print("\n 2. Searching for relevant documents for the query...")
-    results = search_faiss_index(vector_store, query)
+    results = search_faiss_index(vector_store, query, top_k=5)
     
     if not results:
         print("\nNo relevant documents found. Unable to generate an answer.")
     else:
         print(f"\n3. Found {len(results)} relevant documents for the query.")
+        for doc in results:
+            source = doc.metadata.get('source', 'Unknown Source')
+            #page_content = doc.page_content
+            print(f"Document: {source}\n")
     
     # Concatenate retrieved document chunks
     context = "\n\n".join([doc.page_content for doc in results])
@@ -67,21 +71,8 @@ def main():
         if query.lower() in ["exit", "quit"]:
             print("Exiting search.")
             break
-
-        print("\n 2. Searching for relevant documents for the query...")
-        results = search_faiss_index(vector_store, query)
-
-        if not results:
-            print("\nNo relevant documents found. Unable to generate an answer.")
-            continue
-        else:
-            print(f"\n3. Found {len(results)} relevant documents for the query.")
-
-        # Concatenate retrieved document chunks
-        context = "\n\n".join([doc.page_content for doc in results])
-
-        print("\n4. Context created.Generating answer from LLM...")
-        answer = query_llm(query, context)
+   
+        answer = get_rag_response(query)
 
         print("\n5. AI Generated Answer:")
         print(answer)

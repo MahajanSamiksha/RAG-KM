@@ -26,7 +26,8 @@ def extract_text_from_pdf(pdf_path):
                 text += extracted + "\n"
     print(f"extract_text_from_pdf ends: {pdf_path}")
     #return correct_spelling(clean_text(text.strip()))
-    return (clean_text(text.strip()))
+    #return (clean_text(text.strip()))
+    return (text.strip())
 
 
 # Function to extract and preprocess text from a DOCX file
@@ -36,7 +37,8 @@ def extract_text_from_docx(docx_path):
     raw_text = "\n".join([para.text for para in doc.paragraphs])    
     print(f"extract_text_from_docx ends: {docx_path}")
     #return correct_spelling(clean_text(raw_text))
-    return (clean_text(raw_text))
+    #return (clean_text(raw_text))
+    return (raw_text)
 
 # Function to extract and preprocess text from an Excel file (XLSX, CSV)
 def extract_text_from_excel(file_path):
