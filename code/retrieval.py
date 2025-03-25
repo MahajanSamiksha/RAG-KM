@@ -15,9 +15,9 @@ def get_user_query():
     """Gets a query from the user."""
     return input("Enter your search query: ")
 
-def search_faiss_index(vector_store, query, top_k=3):
+def search_faiss_index(vector_store, query_embedding, top_k=3):
     """Searches FAISS for the most relevant documents based on the query."""
-    results = vector_store.similarity_search(query, k=top_k)
+    results = vector_store.similarity_search_by_vector(query_embedding, k=top_k)
     return results
 
 def query_llm(query, context, model="gpt-4"):
@@ -41,13 +41,19 @@ def get_rag_response(query: str):
     print("1. Loading FAISS index...")
     vector_store = load_faiss_index()
 
-    print("\n 2. Searching for relevant documents for the query...")
-    results = search_faiss_index(vector_store, query, top_k=5)
+    print("\n2. Creating embedding for user query...")
+    # Initialize embeddings model (you can pass API key via env or directly if needed)
+    embedding_model = OpenAIEmbeddings()
+    # Create embedding using LangChain's OpenAIEmbeddings
+    query_embedding = embedding_model.embed_query(query)  # returns a list[float]
+
+    print("\n 3. Searching for relevant documents for the query...")
+    results = search_faiss_index(vector_store, query_embedding, top_k=5)
     
     if not results:
         print("\nNo relevant documents found. Unable to generate an answer.")
     else:
-        print(f"\n3. Found {len(results)} relevant documents for the query.")
+        print(f"\n4. Found {len(results)} relevant documents for the query.")
         for doc in results:
             source = doc.metadata.get('source', 'Unknown Source')
             #page_content = doc.page_content
@@ -56,7 +62,7 @@ def get_rag_response(query: str):
     # Concatenate retrieved document chunks
     context = "\n\n".join([doc.page_content for doc in results])
 
-    print("\n4. Context created.Generating answer from LLM...")
+    print("\n5. Context created.Generating answer from LLM...")
     answer = query_llm(query, context)
 
     return str(answer)
