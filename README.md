@@ -108,4 +108,6 @@ python -m textblob.download_corpora
 | llama-index                     | 0.12.24     |
 | llama-index-vector-stores-faiss| 0.3.0       |
 | langchain-openai                | 0.3.9       |
+| langchain                       | 0.3.21      |
 | streamlit                       | 1.41.1      |
+| langGraph                       | 0.2.67      |
