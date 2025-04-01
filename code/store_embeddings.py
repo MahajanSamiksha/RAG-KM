@@ -1,13 +1,13 @@
-import os
+#import os
 import re
-import pickle
+#import pickle
 from langchain.vectorstores import FAISS
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.schema import Document
 
 def load_text_file(file_path):
-    """Reads a text file and extracts document content along with associated file names."""
+    """Reads a text file and extracts document content which matches along with associated file names."""
     with open(file_path, "r", encoding="utf-8") as f:
         lines = f.readlines()
 
