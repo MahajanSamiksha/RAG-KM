@@ -1,3 +1,4 @@
+import json
 import os
 import streamlit as st
 from retrieval import get_rag_response  # Import the function from your existing script
@@ -41,3 +42,9 @@ if query:
 
 # Manual Stop Button
 st.button("End Session", on_click=lambda: os._exit(0))  # Manual Stop Button
+
+def lambda_handler(event, context):
+    return {
+        'statusCode': 200,
+        'body': json.dumps('Hello from Lambda!')
+    }
