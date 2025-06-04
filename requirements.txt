@@ -1,0 +1,12 @@
+gensim textblob 
+langchain-community 
+pdfplumber 
+python-docx 
+pandas 
+openpyxl 
+python-pptx 
+faiss-cpu 
+llama-index
+llama-index-vector-stores-faiss
+langchain-openai
+streamlit

@@ -1,0 +1,16 @@
+version: 0.1
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.10.5
+    commands:
+      - echo "Installing dependencies..."
+      - pip install -r requirements.txt -t .
+  build:
+    commands:
+      - echo "Packaging application..."
+      - zip -r lambda-deploy.zip . -x "*.git*" "tests/*" "*.md"
+artifacts:
+  files:
+    - lambda-deploy.zip
