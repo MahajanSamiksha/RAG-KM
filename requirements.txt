@@ -1,4 +1,5 @@
-gensim textblob 
+gensim 
+textblob 
 langchain-community 
 pdfplumber 
 python-docx 
